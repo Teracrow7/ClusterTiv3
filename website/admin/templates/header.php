@@ -58,6 +58,7 @@ if (!isset($_SESSION['usuario'])) {
                     <a class="nav-item nav-link active" href="#" aria-current="page"
                         >Administrador <span class="visually-hidden">(current)</span></a
                     >
+                    <a class="nav-item nav-link" href="<?php echo $url_base; ?>secciones/slider/index.php">Slider</a>
                     <a class="nav-item nav-link" href="<?php echo $url_base; ?>secciones/servicios/index.php">Servicios</a>
                     <a class="nav-item nav-link" href="<?php echo $url_base; ?>secciones/portafolio/index.php">Portafolio</a>
                     <a class="nav-item nav-link" href="<?php echo $url_base; ?>secciones/entradas/index.php">Entradas</a>

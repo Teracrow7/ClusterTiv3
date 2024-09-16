@@ -3,28 +3,34 @@ include("admin/bd.php"); // Asegúrate de que este archivo defina la variable $c
 
 // Verifica que la conexión se haya establecido antes de continuar
 if ($conexion) {
+
+    //slider
+    $sentencia = $conexion->prepare("SELECT * FROM slider");
+    $sentencia->execute();
+    $lista_noticias = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
     // servicios
-    $sentencia = $conexion->prepare("SELECT * FROM `servicios`");
+    $sentencia = $conexion->prepare("SELECT * FROM servicios");
     $sentencia->execute();
     $lista_servicios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
     // portafolio
-   // $sentencia = $conexion->prepare("SELECT * FROM `portafolio`");
+   // $sentencia = $conexion->prepare("SELECT * FROM portafolio");
     //$sentencia->execute();
     //$lista_portafolio = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
     // entradas
-    $sentencia = $conexion->prepare("SELECT * FROM `entradas`");
+    $sentencia = $conexion->prepare("SELECT * FROM entradas");
     $sentencia->execute();
     $lista_entradas = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
     // team
-    $sentencia = $conexion->prepare("SELECT * FROM `equipo`");
+    $sentencia = $conexion->prepare("SELECT * FROM equipo");
     $sentencia->execute();
     $lista_equipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
     // configuraciones
-    $sentencia = $conexion->prepare("SELECT * FROM `configuraciones`");
+    $sentencia = $conexion->prepare("SELECT * FROM configuraciones");
     $sentencia->execute();
     $lista_configuraciones = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 } else {
@@ -80,7 +86,100 @@ if ($conexion) {
             <div class="container">
                 <div class="masthead-subheading"><?php echo $lista_configuraciones[0]['valor']?></div>
                 <div class="masthead-heading text-uppercase"><?php echo $lista_configuraciones[1]['valor']?></div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="<?php echo $lista_configuraciones[3]['valor']?>"><?php echo $lista_configuraciones[2]['valor']?></a>
+
+                
+
+<!-- Inicio del carrusel -->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicadores -->
+    <div class="carousel-indicators">
+        <?php foreach ($lista_noticias as $index => $item): ?>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $index; ?>" class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-current="<?php echo $index === 0 ? 'true' : 'false'; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Contenido del carrusel -->
+    <div class="carousel-inner">
+        <?php foreach ($lista_noticias as $index => $item): ?>
+        <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+            <!-- Contenedor centrado sin fondo blanco -->
+            <div class="slider-container" style="display: flex; justify-content: center; padding: 20px;">
+                <div class="slider-item" style="width: 83%; padding: 0; border-radius: 55px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                    <!-- Imagen con ajuste responsivo -->
+                    <img src="assets/img/slider/<?php echo $item['imagen']; ?>" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="<?php echo $item['titulo']; ?>">
+                    <!-- Título y descripción debajo de la imagen -->
+                    <div class="text-center mt-3">
+                    <h5 style="color: black;"><?php echo $item['titulo']; ?></h5>
+                    <p style="color: white;"><?php echo $item['descripcion']; ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Controles del carrusel -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
+
+<!-- Asegúrate de incluir Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- CSS adicional para hacer el carrusel responsivo y centrado -->
+<style>
+    /* Ajuste del contenedor principal del slider */
+    .slider-container {
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        /* Ajusta la posición del slider usando margen */
+        margin-left: 0;  /* Cambia este valor para mover el slider a la izquierda o derecha si es necesario */
+    }
+
+    /* Asegura que la imagen mantenga sus proporciones en cualquier tamaño de pantalla */
+    .slider-item img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Ajuste del borde redondeado */
+    .slider-item {
+        /* Puedes ajustar el tamaño del borde aquí */
+        border-radius: 15px;  /* Cambia este valor para modificar el tamaño del borde redondeado */
+    }
+
+    /* Margen y espaciado para el texto */
+    .carousel-caption h5, .carousel-caption p {
+        margin: 0;
+    }
+
+    /* Margen para dispositivos pequeños */
+    @media (max-width: 768px) {
+        .slider-item {
+            padding: 10px;
+        }
+        .slider-item img {
+            max-height: 250px;
+        }
+    }
+</style>
+
+
+
+
+
+
+
+
+                
             </div>
         </header>
         <!-- Services-->
@@ -179,28 +278,25 @@ if ($conexion) {
             </div>
         </section>
                     -->
-        <!-- About-->
-        <section class="page-section bg-light" id="about">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase"><?php echo $lista_configuraciones[8]['valor']?></h2>
-                    <h3 class="section-subheading text-muted"><?php echo $lista_configuraciones[9]['valor']?></h3>
-                </div>
-                <ul class="timeline">
-                    
-                <?php 
-                $contador=1;
-                foreach ($lista_entradas as $registros)
-                
-                {?>
+        <!-- About -->
+<section class="page-section bg-light" id="about">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase"><?php echo $lista_configuraciones[8]['valor']?></h2>
+            <h3 class="section-subheading text-muted"><?php echo $lista_configuraciones[9]['valor']?></h3>
+        </div>
+        <ul class="timeline">
+            <?php 
+            $contador = 1;
+            foreach ($lista_entradas as $registros) { ?>
                 <li <?php echo (($contador % 2) == 0) ? 'class="timeline-inverted"' : ""; ?>>
-                <div class="timeline-image" style="width: 245px; height: 175px; overflow: hidden; position: relative;">
-                    <img class="rounded-circle img-fluid" 
-                        src="assets/img/entradas/<?php echo $registros['imagen']; ?>" 
-                        alt="..." 
-                        style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0;" />
-                </div>
-                    <div class="timeline-panel">
+                    <div class="timeline-image" style="width: 245px; height: 175px; overflow: hidden; position: relative;">
+                        <img class="rounded-circle img-fluid" 
+                            src="assets/img/entradas/<?php echo $registros['imagen']; ?>" 
+                            alt="..." 
+                            style="object-fit: cover; left:0; width: 100%; height: 100%; position: absolute; top: 0; left: 0;" />
+                    </div>
+                    <div class="timeline-panel" style="height:100;"> <!-- Centrar el texto -->
                         <div class="timeline-heading">
                             <h4><?php echo $registros['fecha']; ?></h4>
                             <h4 class="subheading"><?php echo $registros['titulo']; ?></h4>
@@ -210,27 +306,28 @@ if ($conexion) {
                         </div>
                     </div>
                 </li>
+            <?php 
+            $contador++;
+            } ?>
+            <li class="timeline-inverted">
+                <div class="timeline-image">
+                    <h4>
+                        Y AUN NOS ESPERA
+                        <br />
+                        MAS!!!
+                    </h4>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
 
-                    <?php 
-                $contador++;
-                
-                }?>
 
 
-                    <li class="timeline-inverted">
-                        <div class="timeline-image">
-                            <h4>
-                                Y AUN NOS ESPERA
-                                <br />
-                                MAS!!!
-                                
-                            </h4>
-                        </div>
-                    </li>
 
-                </ul>
-            </div>
-        </section>
+
+
+
         <!-- Team-->
         <section class="page-section" id="team">
             <div class="container">
@@ -287,20 +384,22 @@ if ($conexion) {
             padding: 15px 30px;
             font-size: 16px;
             font-weight: bold;
-            color: #fff;
-            background-color: #007bff; /* Color azul para el botón */
-            border: 2px solid #007bff;
+            color: black;
+            background-color: lightseagreen; /* Color azul para el botón */
+            border: 2px solid white;
             border-radius: 5px;
-            text-decoration: none;
+            text-decoration: white;
             text-align: center;
             transition: all 0.3s ease;
         }
 
         .btn-hub:hover {
-            background-color: red; /* Color azul más oscuro en hover */
-            border-color: #0056b3;
+            color: black;
+            background-color: lightgreen; /* Color azul más oscuro en hover */
+            border-color: black;
             transform: scale(1.05);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            
         }
         </style>
 

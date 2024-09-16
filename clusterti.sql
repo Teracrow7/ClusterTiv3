@@ -154,6 +154,37 @@ INSERT INTO `portafolio` VALUES (7,'Masivo XML','Pagina de Aterrizaje','17164209
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Slider`
+--
+
+
+DROP TABLE IF EXISTS `Slider`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE `Slider` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `imagen` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `servicios` WRITE;
+/*!40000 ALTER TABLE `slider` DISABLE KEYS */;
+-- Inserción de 3 registros en la tabla Slider
+
+INSERT INTO `Slider` (`imagen`, `titulo`, `descripcion`) 
+VALUES 
+('1726515762_SLIDES CLUSTER_Mesa de trabajo 1 copia.jpg', 'Inauguracion del HUB', 'Inauguracion del HUB'),
+('1726516299_SLIDES CLUSTER-04.jpg', '', ''),
+('1726516311_SLIDES CLUSTER-02.jpg', '', '');
+/*!40000 ALTER TABLE `slider` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `servicios`
 --
 
