@@ -76,7 +76,7 @@ if ($conexion) {
                         <li class="nav-item"><a class="nav-link" href="#team">Miembros</a></li>
                         <li class="nav-item"><a class="nav-link" href="#hub">Hub Tech</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
-                        <li class="nav-item"><a class="nav-link" href="admin/login.php">Administrador</a></li>
+                        
                     </ul>
                 </div>
             </div>
